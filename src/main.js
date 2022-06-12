@@ -3,6 +3,11 @@ import * as readline from 'node:readline';
 import {stdin as input, stdout as output, argv} from 'node:process';
 import path from 'path';
 import {list} from './list.js';
+import {read} from './read.js';
+import {create} from './create.js';
+import {rename} from './rename.js';
+import {copy} from './copy.js';
+import {remove} from './delete.js';
 
 // get username
 const {username} = parseArgs(argv.slice(2));
@@ -47,6 +52,24 @@ for await (const input of rl) {
         if (homeDir !== process.cwd()) {
           process.chdir(path.join(process.cwd(), '..'));
         }
+        break;
+      case 'cat':
+        await read(first).then(console.log);
+        break;
+      case 'add':
+        await create(first);
+        break;
+      case 'rn':
+        await rename(first, second);
+        break;
+      case 'cp':
+        await copy(first, second);
+        break;
+      case 'mv':
+        await copy(first, second).then(() => remove(first));
+        break;
+      case 'rm':
+        await remove(first);
         break;
       default:
         console.log(`Invalid input: ${input}`);
