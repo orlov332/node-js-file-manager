@@ -2,12 +2,13 @@ import {parseArgs} from './args.js';
 import * as readline from 'node:readline';
 import {stdin as input, stdout as output, argv} from 'node:process';
 import path from 'path';
-import {list} from './list.js';
-import {read} from './read.js';
-import {create} from './create.js';
-import {rename} from './rename.js';
-import {copy} from './copy.js';
-import {remove} from './delete.js';
+import {list} from './files/list.js';
+import {read} from './files/read.js';
+import {create} from './files/create.js';
+import {rename} from './files/rename.js';
+import {copy} from './files/copy.js';
+import {remove} from './files/delete.js';
+import {processOsCommand} from './os.js';
 
 // get username
 const {username} = parseArgs(argv.slice(2));
@@ -70,6 +71,9 @@ for await (const input of rl) {
         break;
       case 'rm':
         await remove(first);
+        break;
+      case 'os':
+        await processOsCommand(first);
         break;
       default:
         console.log(`Invalid input: ${input}`);
