@@ -9,6 +9,7 @@ import {rename} from './files/rename.js';
 import {copy} from './files/copy.js';
 import {remove} from './files/delete.js';
 import {processOsCommand} from './os.js';
+import {calculateHash} from './calcHash.js';
 
 // get username
 const {username} = parseArgs(argv.slice(2));
@@ -74,6 +75,9 @@ for await (const input of rl) {
         break;
       case 'os':
         await processOsCommand(first);
+        break;
+      case 'hash':
+        await calculateHash(first).then(console.log);
         break;
       default:
         console.log(`Invalid input: ${input}`);
