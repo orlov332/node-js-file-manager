@@ -10,6 +10,8 @@ import {copy} from './files/copy.js';
 import {remove} from './files/delete.js';
 import {processOsCommand} from './os.js';
 import {calculateHash} from './calcHash.js';
+import {compress} from './zip/compress.js';
+import {decompress} from './zip/decompress.js';
 
 // get username
 const {username} = parseArgs(argv.slice(2));
@@ -78,6 +80,12 @@ for await (const input of rl) {
         break;
       case 'hash':
         await calculateHash(first).then(console.log);
+        break;
+      case 'compress':
+        await compress(first, second);
+        break;
+      case 'decompress':
+        await decompress(first, second);
         break;
       default:
         console.log(`Invalid input: ${input}`);
