@@ -58,7 +58,7 @@ for await (const input of rl) {
         }
         break;
       case 'cat':
-        await read(first).then(console.log);
+        await read(first);
         break;
       case 'add':
         await create(first);

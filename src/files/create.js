@@ -1,10 +1,10 @@
-import fsPromises from 'fs/promises';
+import {pipeline} from 'stream/promises';
+import fs from 'fs';
+import {Readable} from 'stream';
 
 export const create = async (file) => {
-  const data = '';
-
-  return fsPromises.writeFile(file, data, {flag: 'wx'}).catch((err) => {
-    if (err.code === 'EEXIST') throw new Error('FS operation failed');
-    else throw err;
-  });
+  return pipeline(
+      Readable.from(''),
+      fs.createWriteStream(file),
+  );
 };

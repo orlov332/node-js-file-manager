@@ -1,11 +1,9 @@
-import fsPromises from 'fs/promises';
+import fs from 'fs';
 
 
 export const read = async (file) => {
-  return fsPromises
-      .readFile(file, 'utf8')
-      .catch((err) => {
-        if (err.code === 'ENOENT') throw new Error('FS operation failed');
-        else throw err;
-      });
+  const str = fs.createReadStream(file, 'utf8');
+  for await (const chunk of str) {
+    console.log(chunk);
+  }
 };
